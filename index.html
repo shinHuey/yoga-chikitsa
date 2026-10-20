@@ -243,6 +243,9 @@ h2.sec{margin:26px 0 10px}
 .sheet p{margin:0 0 14px;color:var(--muted);font-size:14px}
 .sheet .next{margin-top:0}
 .sheet .row{margin-top:8px}
+.qrbox{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 0 14px}
+.qr{width:168px;height:168px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:4px}
+.qrurl{font-family:var(--font-ui);font-size:13px;color:var(--accent);user-select:all;-webkit-user-select:all}
 .sheet textarea{width:100%;height:110px;margin-top:10px;font:12px/1.4 ui-monospace,Menlo,monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;max-width:min(92vw,440px);text-align:center;box-shadow:0 10px 30px -10px rgba(0,0,0,.4);animation:up .25s ease}
 
@@ -257,21 +260,20 @@ h2.sec{margin:26px 0 10px}
         <svg viewBox="0 0 32 32" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M16 6c3 4 3 10 0 15-3-5-3-11 0-15z"/><path d="M16 21c-2-6-7-9-12-8 1 5 6 8 12 8z"/><path d="M16 21c2-6 7-9 12-8-1 5-6 8-12 8z"/><path d="M6 25h20"/></g></svg>
         <div><b>Ashtanga Primary</b><span>第一級序列 · 梵文測驗</span></div>
       </button>
-      <button class="dl" id="dlBtn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>下載分享</button>
+      <button class="dl" id="dlBtn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 10V2.5M8 2.5 5 5.5M8 2.5l3 3M4 8.5H3v5.5h10V8.5h-1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>分享網址</button>
     </div>
   </header>
   <main class="gut"><div class="col" id="app"></div></main>
   <div class="scrim" id="sheet" hidden>
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-      <h3 id="sheetTitle">下載此測驗分享給朋友</h3>
-      <p>會產生一個獨立的 <b>ashtanga-primary-quiz.html</b> 檔，圖案和題庫都在檔案裡，離線也能玩。傳到 LINE 或微信群組，朋友點開就能測驗。</p>
-      <button class="next" id="doDownload">下載 .html 檔</button>
+      <h3 id="sheetTitle">分享給同學</h3>
+      <p>掃 QR code 或傳網址。用手機打開後「加入主畫面」，就會出現專屬圖示，像 App 一樣使用（iPhone 請用 Safari）。</p>
+      <div class="qrbox"><svg viewBox="0 0 31 31" class="qr" role="img" aria-label="網址 QR code" shape-rendering="crispEdges"><rect width="31" height="31" fill="#fff"/><path d="M1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM5 1h1v1h-1zM6 1h1v1h-1zM7 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM15 1h1v1h-1zM18 1h1v1h-1zM19 1h1v1h-1zM23 1h1v1h-1zM24 1h1v1h-1zM25 1h1v1h-1zM26 1h1v1h-1zM27 1h1v1h-1zM28 1h1v1h-1zM29 1h1v1h-1zM1 2h1v1h-1zM7 2h1v1h-1zM13 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM21 2h1v1h-1zM23 2h1v1h-1zM29 2h1v1h-1zM1 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM7 3h1v1h-1zM9 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM19 3h1v1h-1zM20 3h1v1h-1zM23 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM27 3h1v1h-1zM29 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM7 4h1v1h-1zM10 4h1v1h-1zM11 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM21 4h1v1h-1zM23 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM27 4h1v1h-1zM29 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM19 5h1v1h-1zM23 5h1v1h-1zM25 5h1v1h-1zM26 5h1v1h-1zM27 5h1v1h-1zM29 5h1v1h-1zM1 6h1v1h-1zM7 6h1v1h-1zM9 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM15 6h1v1h-1zM17 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM23 6h1v1h-1zM29 6h1v1h-1zM1 7h1v1h-1zM2 7h1v1h-1zM3 7h1v1h-1zM4 7h1v1h-1zM5 7h1v1h-1zM6 7h1v1h-1zM7 7h1v1h-1zM9 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM15 7h1v1h-1zM17 7h1v1h-1zM19 7h1v1h-1zM21 7h1v1h-1zM23 7h1v1h-1zM24 7h1v1h-1zM25 7h1v1h-1zM26 7h1v1h-1zM27 7h1v1h-1zM28 7h1v1h-1zM29 7h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM13 8h1v1h-1zM1 9h1v1h-1zM3 9h1v1h-1zM7 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM17 9h1v1h-1zM21 9h1v1h-1zM24 9h1v1h-1zM27 9h1v1h-1zM29 9h1v1h-1zM1 10h1v1h-1zM2 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM11 10h1v1h-1zM12 10h1v1h-1zM13 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM24 10h1v1h-1zM28 10h1v1h-1zM29 10h1v1h-1zM2 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM24 11h1v1h-1zM26 11h1v1h-1zM27 11h1v1h-1zM29 11h1v1h-1zM4 12h1v1h-1zM5 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM24 12h1v1h-1zM25 12h1v1h-1zM26 12h1v1h-1zM1 13h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM13 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM24 13h1v1h-1zM29 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM9 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM28 14h1v1h-1zM29 14h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM7 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM14 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM20 15h1v1h-1zM23 15h1v1h-1zM25 15h1v1h-1zM29 15h1v1h-1zM1 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM10 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM15 16h1v1h-1zM16 16h1v1h-1zM19 16h1v1h-1zM22 16h1v1h-1zM25 16h1v1h-1zM3 17h1v1h-1zM4 17h1v1h-1zM6 17h1v1h-1zM7 17h1v1h-1zM9 17h1v1h-1zM11 17h1v1h-1zM15 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM19 17h1v1h-1zM21 17h1v1h-1zM23 17h1v1h-1zM24 17h1v1h-1zM29 17h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM9 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM27 18h1v1h-1zM28 18h1v1h-1zM29 18h1v1h-1zM1 19h1v1h-1zM2 19h1v1h-1zM4 19h1v1h-1zM5 19h1v1h-1zM7 19h1v1h-1zM8 19h1v1h-1zM10 19h1v1h-1zM13 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM26 19h1v1h-1zM29 19h1v1h-1zM3 20h1v1h-1zM6 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM25 20h1v1h-1zM1 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM7 21h1v1h-1zM8 21h1v1h-1zM9 21h1v1h-1zM11 21h1v1h-1zM12 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM17 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM22 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM25 21h1v1h-1zM26 21h1v1h-1zM28 21h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM29 22h1v1h-1zM1 23h1v1h-1zM2 23h1v1h-1zM3 23h1v1h-1zM4 23h1v1h-1zM5 23h1v1h-1zM6 23h1v1h-1zM7 23h1v1h-1zM9 23h1v1h-1zM12 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM21 23h1v1h-1zM23 23h1v1h-1zM25 23h1v1h-1zM29 23h1v1h-1zM1 24h1v1h-1zM7 24h1v1h-1zM10 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM25 24h1v1h-1zM28 24h1v1h-1zM1 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM5 25h1v1h-1zM7 25h1v1h-1zM10 25h1v1h-1zM12 25h1v1h-1zM13 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM17 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM23 25h1v1h-1zM24 25h1v1h-1zM25 25h1v1h-1zM26 25h1v1h-1zM28 25h1v1h-1zM1 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM5 26h1v1h-1zM7 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM16 26h1v1h-1zM17 26h1v1h-1zM18 26h1v1h-1zM21 26h1v1h-1zM22 26h1v1h-1zM25 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM29 26h1v1h-1zM1 27h1v1h-1zM3 27h1v1h-1zM4 27h1v1h-1zM5 27h1v1h-1zM7 27h1v1h-1zM9 27h1v1h-1zM10 27h1v1h-1zM12 27h1v1h-1zM15 27h1v1h-1zM16 27h1v1h-1zM25 27h1v1h-1zM28 27h1v1h-1zM29 27h1v1h-1zM1 28h1v1h-1zM7 28h1v1h-1zM11 28h1v1h-1zM12 28h1v1h-1zM13 28h1v1h-1zM14 28h1v1h-1zM15 28h1v1h-1zM16 28h1v1h-1zM17 28h1v1h-1zM19 28h1v1h-1zM21 28h1v1h-1zM23 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1zM26 28h1v1h-1zM1 29h1v1h-1zM2 29h1v1h-1zM3 29h1v1h-1zM4 29h1v1h-1zM5 29h1v1h-1zM6 29h1v1h-1zM7 29h1v1h-1zM9 29h1v1h-1zM11 29h1v1h-1zM13 29h1v1h-1zM15 29h1v1h-1zM16 29h1v1h-1zM17 29h1v1h-1zM20 29h1v1h-1zM21 29h1v1h-1zM23 29h1v1h-1zM24 29h1v1h-1zM25 29h1v1h-1zM29 29h1v1h-1z" fill="#3A2A1D"/></svg><div class="qrurl" id="shareUrl">shinhuey.github.io/yoga-chikitsa/</div></div>
+      <button class="next" id="doShare">分享網址</button>
       <div class="row">
-        <button class="ghost" id="doCopy">複製網頁原始碼</button>
+        <button class="ghost" id="doCopy">複製網址</button>
         <button class="ghost" id="closeSheet">關閉</button>
       </div>
-      <p id="copyHint" style="margin:12px 0 0;font-size:13px" hidden>如果按下載沒有反應（部分 App 內建瀏覽器會擋下載），請複製原始碼，貼到記事本後另存為 <b>.html</b> 檔即可。</p>
-      <textarea id="codeBox" readonly hidden aria-label="網頁原始碼"></textarea>
     </div>
   </div>
   <div class="toast" id="toast" role="status" hidden></div>
@@ -281,7 +283,7 @@ h2.sec{margin:26px 0 10px}
 (function(){
 "use strict";
 var SHELL = document.getElementById('shell').outerHTML;
-var ICON_TAGS=[].map.call(document.querySelectorAll('link[rel="apple-touch-icon"],link[rel="icon"],meta[name="apple-mobile-web-app-title"],meta[name="theme-color"]'),function(e){return e.outerHTML+"\n";}).join('');
+var ICON_TAGS_UNUSED=[].map.call(document.querySelectorAll('link[rel="apple-touch-icon"],link[rel="icon"],meta[name="apple-mobile-web-app-title"],meta[name="theme-color"]'),function(e){return e.outerHTML+"\n";}).join('');
 
 /* Pose data. pts = head, neck, pelvis, far elbow, far hand, near elbow, near hand, far knee, far foot, near knee, near foot (viewBox 120, ground y=112) */
 var CATS = ['開場與拜日式','站立序列','坐姿序列','結束序列'];
@@ -818,58 +820,26 @@ document.addEventListener('keydown',function(e){
   else if(S.done && e.key==='Enter' && document.activeElement && document.activeElement.id!=='next'){e.preventDefault();next();}
 });
 
-/* ---------- download & share ---------- */
-function buildHTML(){
-  var css=document.getElementById('appStyle').textContent;
-  var js=document.getElementById('appScript').textContent;
-  return '<!DOCTYPE html>\n<html lang="zh-Hant">\n<head>\n<meta charset="utf-8">\n'+
-    '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'+
-    '<title>Ashtanga 第一級序列梵文測驗</title>\n'+ICON_TAGS+
-    '<style id="appStyle">'+css+'</style>\n</head>\n<body>\n'+SHELL+'\n<script id="appScript">'+js+'<\/script>\n</body>\n</html>\n';
-}
+/* ---------- share ---------- */
+var SHARE_URL='https://shinhuey.github.io/yoga-chikitsa/';
 var sheet=document.getElementById('sheet'), toastEl=document.getElementById('toast'), tt;
 function toast(t){toastEl.textContent=t;toastEl.hidden=false;clearTimeout(tt);tt=setTimeout(function(){toastEl.hidden=true;},3200);}
-function openSheet(){sheet.hidden=false;document.getElementById('codeBox').hidden=true;try{document.getElementById('doDownload').focus();}catch(e){}}
+function openSheet(){sheet.hidden=false;try{document.getElementById('doShare').focus();}catch(e){}}
 function closeSheet(){sheet.hidden=true;}
 document.getElementById('dlBtn').onclick=openSheet;
 document.getElementById('closeSheet').onclick=closeSheet;
 sheet.addEventListener('click',function(e){if(e.target===sheet)closeSheet();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!sheet.hidden)closeSheet();});
 document.getElementById('homeBtn').onclick=function(){renderHome();top();};
-var dlCap=null;
-if(window.claude&&typeof window.claude.use==='function'){
-  try{window.claude.use('downloads').then(function(d){dlCap=d;},function(){});}catch(e){}
+function copyUrl(){
+  function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('shareUrl'));var sel=window.getSelection();sel.removeAllRanges();sel.addRange(r);toast('已選取網址，請長按複製');}
+  try{navigator.clipboard.writeText(SHARE_URL).then(function(){toast('已複製網址，貼到 LINE 就能分享');},fallback);}catch(e){fallback();}
 }
-document.getElementById('doDownload').onclick=function(){
-  if(dlCap){
-    dlCap.save({filename:'ashtanga-primary-quiz.html',data:buildHTML()}).then(function(){
-      toast('已下載 ashtanga-primary-quiz.html');closeSheet();
-    },function(err){
-      var c=err&&err.code;
-      if(c==='declined') toast('已取消下載');
-      else if(c==='rate_limited') toast('下載視窗已開啟，請稍候再試');
-      else {toast('這裡無法下載，請改用「複製網頁原始碼」');document.getElementById('copyHint').hidden=false;}
-    });
-    return;
-  }
-  try{
-    var blob=new Blob([buildHTML()],{type:'text/html;charset=utf-8'});
-    var url=URL.createObjectURL(blob);
-    var a=document.createElement('a');
-    a.href=url;a.download='ashtanga-primary-quiz.html';
-    document.body.appendChild(a);a.click();a.remove();
-    setTimeout(function(){URL.revokeObjectURL(url);},4000);
-    toast('已產生 ashtanga-primary-quiz.html');
-  }catch(e){toast('這個瀏覽器不允許下載，請改用「複製網頁原始碼」');}
-  document.getElementById('copyHint').hidden=false;
-};
-document.getElementById('doCopy').onclick=function(){
-  var html=buildHTML(), box=document.getElementById('codeBox');
-  function fallback(){box.value=html;box.hidden=false;box.focus();box.select();toast('已選取原始碼，請長按或按 Ctrl+C 複製');}
-  try{
-    navigator.clipboard.writeText(html).then(function(){toast('已複製！貼到記事本存成 .html 即可分享');},fallback);
-  }catch(e){fallback();}
-  document.getElementById('copyHint').hidden=false;
+document.getElementById('doCopy').onclick=copyUrl;
+document.getElementById('doShare').onclick=function(){
+  if(navigator.share){
+    navigator.share({title:'Ashtanga 第一級序列梵文測驗',text:'一起練 Ashtanga 第一級序列的梵文！看圖配梵文、連連看，還有發音。',url:SHARE_URL}).catch(function(e){if(e&&e.name!=='AbortError')copyUrl();});
+  } else copyUrl();
 };
 
 renderHome();
