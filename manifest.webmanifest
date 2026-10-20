@@ -1,13 +1,19 @@
 {
- "name": "Ashtanga 第一級序列梵文測驗",
+ "name": "梵文測驗",
  "short_name": "梵文測驗",
- "start_url": ".",
- "scope": ".",
+ "description": "Ashtanga 第一級序列梵文練習",
+ "start_url": "./",
+ "scope": "./",
  "display": "standalone",
  "background_color": "#F3EBDD",
  "theme_color": "#F3EBDD",
  "lang": "zh-Hant",
  "icons": [
+  {
+   "src": "icon-180.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
   {
    "src": "icon-192.png",
    "sizes": "192x192",
