@@ -533,7 +533,8 @@ function fig(p,cls,o){
     var d='M'+q(-6.4,-4.6)+' L'+q(6.4,-4.6)+' Q'+q(8.6,-1)+' '+q(8.2,2.4)+' Q'+q(7.8,7.6)+' '+q(3.6,7.4)+' Q'+q(1,7.2)+' '+q(0,5)+' Q'+q(-1,7.2)+' '+q(-3.6,7.4)+' Q'+q(-7.8,7.6)+' '+q(-8.2,2.4)+' Q'+q(-8.6,-1)+' '+q(-6.4,-4.6)+'Z';
     return '<path class="pelvis" d="'+d+'" stroke-width="'+r1(OL*2*10)/10+'"/><path class="seam" d="M'+q(0,1.2)+' L'+q(0,5)+'"/>';
   }
-  var torso='<path class="torso" d="'+torsoShape(-0.08,1.1)+'"/><path class="top-t" d="'+torsoShape(0.16,0.64)+'"/>'+straps+'<path class="shorts-t" d="'+torsoShape(0.76,1.1)+'"/>';
+  var TB=p.hipSplit?0.97:1.1; /* front view standing on split hips: no bulge between the legs */
+  var torso='<path class="torso" d="'+torsoShape(-0.08,TB)+'"/><path class="top-t" d="'+torsoShape(0.16,0.64)+'"/>'+straps+'<path class="shorts-t" d="'+torsoShape(0.76,TB)+'"/>';
   /* ---- braid & face (as before) ---- */
   var braid='', braidPts=[], hair='', face='', headCls='head', braidBack='';
   if(side3){
