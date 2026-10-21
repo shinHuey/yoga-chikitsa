@@ -203,6 +203,15 @@ h2.sec{margin:26px 0 10px}
 .fig .nose{fill:none;stroke:var(--feat);stroke-linecap:round;stroke-linejoin:round}
 .fig .part{stroke:var(--skin);stroke-linecap:round;opacity:.5}
 .fig .mat{fill:var(--line);opacity:.6}
+.fig .zo{fill:none;stroke:var(--ol);stroke-linecap:round;stroke-linejoin:round}
+.fig .zs{fill:none;stroke:var(--skin-n);stroke-linecap:round;stroke-linejoin:round}
+.fig .zsf{fill:none;stroke:var(--skin-f);stroke-linecap:round;stroke-linejoin:round}
+.fig .zf{fill:var(--skin);stroke:var(--ol);stroke-width:2.6;stroke-linejoin:round}
+.fig .zfn{fill:var(--skin-n);stroke:var(--ol);stroke-width:2.6;stroke-linejoin:round}
+.fig .zl{fill:none;stroke:var(--ol);stroke-width:1.4;stroke-linecap:round}
+.fig .zg{stroke:var(--line);stroke-width:2.4;stroke-dasharray:3 4}
+.fig .zr{fill:var(--figbg)}
+.fig .zrr{fill:none;stroke:var(--accent);stroke-width:3.4}
 .fig .prop{fill:none;stroke:var(--sun);stroke-linecap:round;stroke-linejoin:round}
 
 /* pronunciation */
@@ -575,8 +584,12 @@ function fig(p,cls,o){
     '<g stroke-width="'+r1(OL*2*10)/10+'">'+torso+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
     (sym?legSvg(farLeg,hpF,a[7],'sk','sh'):'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+legSvg(nearLeg,hpN,a[9],'sk','sh',!sym,p.fold)+(sym&&!p.thread?limb(armF,'skn',0,1):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,1))+
     (braidBack?'<g'+sw(4.6)+'>'+braidBack+'</g>':'')+'<circle class="'+headCls+'" cx="'+H[0]+'" cy="'+H[1]+'" r="6.3" stroke-width="'+r1(OL*2*10)/10+'"/>'+hair+
-    '<g'+sw(1.6)+'>'+face+'</g></svg>';
+    '<g'+sw(1.6)+'>'+face+'</g>'+zoomSvg(p,x0,y0,W,Hh)+'</svg>';
 }
+var ZOOM={"uttanasana": "<path class=\"zg\" d=\"M-5 79H105\"/><path class=\"zf\" d=\"M8 -5 L8 71 Q8 78 15 78 L51 78 Q58 78 55 71 Q49 66 34 63 Q24 60 21 52 L21 -5Z\"/><path class=\"zo\" d=\"M68 -5 L68 66\" stroke-width=\"15\"/><path class=\"zs\" d=\"M68 -5 L68 66\" stroke-width=\"10\"/><path class=\"zfn\" d=\"M62 68 Q62 77 69 77 L88 77 Q93 77 93 73 Q93 69 88 69 L74 68 Q66 64 62 68Z\"/><path class=\"zl\" d=\"M76 70V76M81 70.3V76.3M86 70.6V76.6\"/>", "padangusthasana": "<path class=\"zg\" d=\"M-5 79H105\"/><path class=\"zf\" d=\"M30 -5 L30 71 Q30 78 37 78 L77 78 Q84 78 81 71 Q75 66 58 63 Q48 60 45 52 L45 -5Z\"/><path class=\"zo\" d=\"M62 -5 L66 50\" stroke-width=\"15\"/><path class=\"zs\" d=\"M62 -5 L66 50\" stroke-width=\"10\"/><path class=\"zo\" d=\"M66 50 Q80 50 84 60 Q87 70 80 72\" stroke-width=\"11\"/><path class=\"zs\" d=\"M66 50 Q80 50 84 60 Q87 70 80 72\" stroke-width=\"6\"/><path class=\"zo\" d=\"M66 52 Q73 56 75 63\" stroke-width=\"9.5\"/><path class=\"zs\" d=\"M66 52 Q73 56 75 63\" stroke-width=\"4.5\"/>", "padahastasana": "<path class=\"zg\" d=\"M-5 84H105\"/><path class=\"zfn\" d=\"M20 76 Q20 84 27 84 L76 84 Q82 84 82 78 L80 74 L26 74 Q20 74 20 76Z\"/><path class=\"zl\" d=\"M33 75V83M40 75V83M47 75V83\"/><path class=\"zf\" d=\"M30 -5 L30 67 Q30 74 37 74 L75 74 Q82 74 79 67 Q73 62 58 59 Q48 56 45 48 L45 -5Z\"/><path class=\"zo\" d=\"M86 -5 L84 76\" stroke-width=\"15\"/><path class=\"zs\" d=\"M86 -5 L84 76\" stroke-width=\"10\"/>", "paschimottanasana": "<path class=\"zg\" d=\"M-5 87H105\"/><path class=\"zf\" d=\"M-5 64 Q40 64 62 66 Q67 63 68 55 L68 47 Q69 40 75 41 Q81 42 80 49 L79 80 Q78 87 70 87 L-5 87Z\"/><path class=\"zo\" d=\"M-5 30 L58 36\" stroke-width=\"15\"/><path class=\"zs\" d=\"M-5 30 L58 36\" stroke-width=\"10\"/><path class=\"zo\" d=\"M58 36 Q74 30 84 38 Q88 46 81 50\" stroke-width=\"11\"/><path class=\"zs\" d=\"M58 36 Q74 30 84 38 Q88 46 81 50\" stroke-width=\"6\"/><path class=\"zo\" d=\"M60 39 Q66 44 71 44\" stroke-width=\"9.5\"/><path class=\"zs\" d=\"M60 39 Q66 44 71 44\" stroke-width=\"4.5\"/>", "paschB": "<path class=\"zg\" d=\"M-5 87H105\"/><path class=\"zf\" d=\"M-5 64 Q40 64 62 66 Q67 63 68 55 L68 47 Q69 40 75 41 Q81 42 80 49 L79 80 Q78 87 70 87 L-5 87Z\"/><path class=\"zo\" d=\"M-5 40 L52 58\" stroke-width=\"15\"/><path class=\"zs\" d=\"M-5 40 L52 58\" stroke-width=\"10\"/><path class=\"zfn\" d=\"M50 56 Q58 50 70 54 Q80 58 80 66 Q78 74 68 74 Q56 72 50 64Z\"/><path class=\"zl\" d=\"M64 58Q74 62 76 68M60 61Q70 65 72 71\"/>", "paschC": "<path class=\"zg\" d=\"M-5 87H105\"/><path class=\"zf\" d=\"M-5 64 Q24 64 44 66 Q49 63 50 55 L50 47 Q51 40 57 41 Q63 42 62 49 L61 80 Q60 87 52 87 L-5 87Z\"/><path class=\"zo\" d=\"M-5 22 L78 26 L82 64\" stroke-width=\"13\"/><path class=\"zsf\" d=\"M-5 22 L78 26 L82 64\" stroke-width=\"8\"/><path class=\"zo\" d=\"M-5 32 L76 36\" stroke-width=\"15\"/><path class=\"zs\" d=\"M-5 32 L76 36\" stroke-width=\"10\"/><path class=\"zo\" d=\"M76 34 Q86 32 88 40 Q88 48 80 48\" stroke-width=\"11\"/><path class=\"zs\" d=\"M76 34 Q86 32 88 40 Q88 48 80 48\" stroke-width=\"6\"/><path class=\"zo\" d=\"M76 38 Q80 42 84 42\" stroke-width=\"9.5\"/><path class=\"zs\" d=\"M76 38 Q80 42 84 42\" stroke-width=\"4.5\"/>"}, zid=0;
+/* magnified hand-and-foot circle in the top-right corner of the frame */
+function zoomSvg(p,x0,y0,W,Hh){var z=ZOOM[p.id];if(!z)return '';var D=Math.min(Hh*0.66,W*0.44),r=function(v){return Math.round(v*10)/10;};var x=r(x0+W-D-1.5),y=r(y0+1.5),id='zc'+(zid++);
+  return '<svg class="zoom" x="'+x+'" y="'+y+'" width="'+r(D)+'" height="'+r(D)+'" viewBox="0 0 100 100"><defs><clipPath id="'+id+'"><circle cx="50" cy="50" r="46"/></clipPath></defs><circle class="zr" cx="50" cy="50" r="46"/><g clip-path="url(#'+id+')">'+z+'</g><circle class="zrr" cx="50" cy="50" r="46"/></svg>';}
 var BASE=117, FRAME={W:120,H:[],Hmax:120};
 (function(){var mw=0,mh=[];P.forEach(function(p){if(p.seq)return;fig(p);mw=Math.max(mw,p._bb[0]);mh[p.c]=Math.max(mh[p.c]||0,p._bb[1]);});
   FRAME.W=Math.ceil(mw+2);FRAME.H=mh.map(function(h){return Math.ceil(h+2);});FRAME.Hmax=Math.max.apply(0,FRAME.H);})();
