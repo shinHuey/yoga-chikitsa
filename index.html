@@ -472,8 +472,8 @@ function fig(p,cls,o){
   }
   /* shoulders / hips (spread sideways in front views) */
   function side(pt){var v=(pt[0]-Nk[0])*nx+(pt[1]-Nk[1])*ny;return v>=0?1:-1;}
-  var shF=tp(0.1,F?0:side(a[3])*5.6), shN=tp(0.1,F?0:side(a[5])*5.6);
-  var hpF=F?Pv:tp(1,side(a[7])*3.6), hpN=F?Pv:tp(1,side(a[9])*3.6);
+  var shF=tp(F?0.1:0.13,F?0:side(a[3])*6.9), shN=tp(F?0.1:0.13,F?0:side(a[5])*6.9);
+  var hpF=F?Pv:tp(0.97,side(a[7])*4.4), hpN=F?Pv:tp(0.97,side(a[9])*4.4);
   /* feet: direction comes from the FT table so every pose has a deliberate foot */
   function foot(ank,knee,spec){
     if(spec===null||spec===undefined) return null;
@@ -506,6 +506,12 @@ function fig(p,cls,o){
   }
   var straps='';[1,-1].forEach(function(sd){var S0=F||1,off=sd>0?interp(FR,0.18)*S0:-interp(BK,0.18)*S0;
     straps+='<path class="strap" d="M'+xy(tp(0.2,off*0.62))+' L'+xy(tp(-0.02,off*0.42))+'"/>';});
+  function legPair(){ /* front view: both legs as one layer, shorts level on top */
+    var o='',f1='',f2='';[[farLeg,hpF,a[7]],[nearLeg,hpN,a[9]]].forEach(function(L){
+      L[0].forEach(function(s){o+=seg(s[0],s[1],s[2]+OL,s[3]+OL);f1+=seg(s[0],s[1],s[2],s[3]);});
+      shortsParts(L[1],L[2]).forEach(function(s){o+=seg(s[0],s[1],s[2]+OL,s[3]+OL);f2+=seg(s[0],s[1],s[2],s[3]);});});
+    return '<g class="ol">'+o+'</g><g class="sk">'+f1+'</g><g class="sh">'+f2+'</g>';
+  }
   var torso='<path class="torso" d="'+torsoShape(-0.08,1.1)+'"/><path class="top-t" d="'+torsoShape(0.16,0.64)+'"/>'+straps+'<path class="shorts-t" d="'+torsoShape(0.76,1.1)+'"/>';
   /* ---- braid & face (as before) ---- */
   var braid='', braidPts=[], hair='', face='', headCls='head', braidBack='';
@@ -537,7 +543,7 @@ function fig(p,cls,o){
   } else if(gz==='f'){
     var h2=Math.atan2(c[1],c[0]);
     hair='<path class="hairfill" d="M'+r1(H[0]+6.3*Math.cos(h2-1.38))+','+r1(H[1]+6.3*Math.sin(h2-1.38))+' A6.3,6.3 0 0 1 '+r1(H[0]+6.3*Math.cos(h2+1.38))+','+r1(H[1]+6.3*Math.sin(h2+1.38))+' Q'+xy([H[0]+c[0]*5.4,H[1]+c[1]*5.4])+' '+r1(H[0]+6.3*Math.cos(h2-1.38))+','+r1(H[1]+6.3*Math.sin(h2-1.38))+'Z"/><path class="part" d="M'+xy([H[0]+c[0]*6.1,H[1]+c[1]*6.1])+' L'+xy([H[0]+c[0]*4.6,H[1]+c[1]*4.6])+'" stroke-width=".7"/>';
-    if(c[1]<-0.5){var bf='M'+xy([H[0]+4.2,H[1]+2])+' Q'+xy([H[0]+8.6,H[1]+8])+' '+xy([H[0]+7.6,H[1]+19]);
+    if(c[1]<-0.5&&H[1]<88){var bf='M'+xy([H[0]+4.2,H[1]+2])+' Q'+xy([H[0]+8.6,H[1]+8])+' '+xy([H[0]+7.6,H[1]+19]);
       braidBack='<path class="braid" d="'+bf+'"/><path class="braid-t" d="'+bf+'"/>'+scrE([H[0]+7.8,H[1]+16],95)+'<circle class="bun" cx="'+r1(H[0]+7.6)+'" cy="'+r1(H[1]+19.5)+'" r="1.6"/>';}
     var px=-c[1],py=c[0];
     face='<circle class="eye" cx="'+r1(H[0]+px*2.3-c[0]*0.8)+'" cy="'+r1(H[1]+py*2.3-c[1]*0.8)+'" r="0.95"/><circle class="eye" cx="'+r1(H[0]-px*2.3-c[0]*0.8)+'" cy="'+r1(H[1]-py*2.3-c[1]*0.8)+'" r="0.95"/>';
@@ -579,10 +585,10 @@ function fig(p,cls,o){
   var neck=limb([[Nk,lerp(Nk,H,0.55),2.3,2.2]],'sk'), armN=armParts(shN,a[5],a[6]), armF=armParts(shF,a[3],a[4]);
   return '<svg viewBox="'+vb+'" class="fig '+(cls||'')+'" role="img" aria-label="體位示意圖">'+
     '<line class="gnd" x1="'+r1(x0-60)+'" y1="113.8" x2="'+r1(x0+W+60)+'" y2="113.8"'+sw(1.6)+'/>'+(p.prop==='twist'?'':prop)+
-    (sym?'':(p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+legSvg(farLeg,hpF,a[7],'skf','shf'))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
+    (sym?'':(p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(!F?'':legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
     '<g'+sw(4.6)+'>'+braid+'</g>'+neck+
     '<g stroke-width="'+r1(OL*2*10)/10+'">'+torso+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
-    (sym?legSvg(farLeg,hpF,a[7],'sk','sh'):'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+legSvg(nearLeg,hpN,a[9],'sk','sh',!sym,p.fold)+(sym&&!p.thread?limb(armF,'skn',0,1):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,1))+
+    (sym||!F?legPair():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||!F?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn',0,1):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,1))+
     (braidBack?'<g'+sw(4.6)+'>'+braidBack+'</g>':'')+'<circle class="'+headCls+'" cx="'+H[0]+'" cy="'+H[1]+'" r="6.3" stroke-width="'+r1(OL*2*10)/10+'"/>'+hair+
     '<g'+sw(1.6)+'>'+face+'</g>'+zoomSvg(p,x0,y0,W,Hh)+'</svg>';
 }
