@@ -418,7 +418,7 @@ P.forEach(function(p,i){p.n=i+1;});
 var GZ={uhpD:0,prasaritaB:'d',prasaritaC:'d',prasaritaD:'d',uhpB:'b',uhpC:95,paschB:90,paschC:90,januB:90,januC:90,baddhakonaB:'d',upavisthaB:'f',suptapadaB:'a',urdhvahasta:-35,uttanasana:180,ardhauttanasana:15,chaturanga:135,updog:-150,downdog:10,samasthitih:0,padangusthasana:180,padahastasana:180,trikonasana:-100,parivrttatri:-95,parsvakona:-110,parivrttaparsva:-80,prasarita:'d',parsvottanasana:180,uhp:0,abpu:180,utkatasana:-30,viraA:-40,viraB:0,
  dandasana:20,paschimottanasana:90,purvottanasana:-130,abpp:90,triang:90,janu:90,mariA:95,mariB:95,mariC:180,mariD:180,navasana:-15,bhujapidasana:130,kurmasana:'f',suptakurmasana:90,garbha:15,kukkutasana:'f',baddhakona:'f',upavistha:'d',suptakona:'f',suptapada:-50,ubhaya:-30,umpasch:0,setu:-160,
  wheel:-170,sarvangasana:-80,halasana:-90,karnapidasana:-90,urdhvapadma:'f',pindasana:'f',matsyasana:-160,uttanapada:-160,sirsasana:'f',baddhapadma:'f',yogamudra:'d',padmasana:'f',utpluthih:'f',savasana:-90};
-var FT={uhpD:[0,[-90,0.8]],prasaritaB:[null,null],prasaritaC:[null,null],prasaritaD:[null,null],uhpB:[null,[-90,0.8]],uhpC:[0,[-60,0.8]],paschB:[-90,-90],paschC:[-90,-90],januB:[-90,[180,0.9]],januC:[-90,[95,1]],baddhakonaB:[null,null],upavisthaB:[null,null],suptapadaB:[-90,[-90,0.6]],urdhvahasta:[0, 0],uttanasana:[0, 0],ardhauttanasana:[0, 0],chaturanga:[[110, 0.7], [110, 0.7]],updog:[0, 0],downdog:[180, 180],samasthitih:[0,0],padangusthasana:[0,0],padahastasana:[0,0],trikonasana:[0,0],parivrttatri:[0,0],parsvakona:[0,0],parivrttaparsva:[0,0],prasarita:[null,null],parsvottanasana:[0,0],uhp:[0,[-90,0.8]],abpu:[null,0],utkatasana:[0,0],viraA:[0,0],viraB:[0,0],
+var FT={uhpD:[0,'pt'],prasaritaB:[null,null],prasaritaC:[null,null],prasaritaD:[null,null],uhpB:[null,[-90,0.8]],uhpC:[0,[-60,0.8]],paschB:[-90,-90],paschC:[-90,-90],januB:[-90,[180,0.9]],januC:[-90,[95,1]],baddhakonaB:[null,null],upavisthaB:[null,null],suptapadaB:[-90,[-90,0.6]],urdhvahasta:[0, 0],uttanasana:[0, 0],ardhauttanasana:[0, 0],chaturanga:[[110, 0.7], [110, 0.7]],updog:[0, 0],downdog:[180, 180],samasthitih:[0,0],padangusthasana:[0,0],padahastasana:[0,0],trikonasana:[0,0],parivrttatri:[0,0],parsvakona:[0,0],parivrttaparsva:[0,0],prasarita:[null,null],parsvottanasana:[0,0],uhp:[0,[-90,0.8]],abpu:[null,0],utkatasana:[0,0],viraA:[0,0],viraB:[0,0],
  dandasana:[-90,-90],paschimottanasana:[-90,-90],purvottanasana:[20,20],abpp:[-90,null],triang:[-90,[180,0.6]],janu:[-90,[-80,0.8]],mariA:[-90,0],mariB:[null,0],mariC:[-90,0],mariD:[null,0],navasana:['pt','pt'],bhujapidasana:['pt','pt'],kurmasana:[null,null],suptakurmasana:[null,null],garbha:[null,null],kukkutasana:[null,null],baddhakona:[null,null],upavistha:[[-90,0.7],[-90,0.7]],suptakona:[null,null],suptapada:[-90,[180,0.8]],ubhaya:['pt','pt'],umpasch:['pt','pt'],setu:[0,0],
  wheel:[0,0],sarvangasana:['pt','pt'],halasana:[180,180],karnapidasana:[[180,1],[180,1]],urdhvapadma:[null,null],pindasana:[null,null],matsyasana:[null,null],uttanapada:['pt','pt'],sirsasana:['pt','pt'],yogamudra:[null,null],padmasana:[null,null],utpluthih:[null,null],savasana:[-70,-70]};
 /* front-facing poses drawn left-right symmetric: far side mirrors the near side, same tones */
@@ -433,6 +433,9 @@ function fig(p,cls,o){
   function xy(q){return r1(q[0])+','+r1(q[1]);}
   function nrm(x,y){var l=Math.hypot(x,y)||1;return [x/l,y/l];}
   function lerp(p,q,t){return [p[0]+(q[0]-p[0])*t,p[1]+(q[1]-p[1])*t];}
+  /* a visible neck: keep the head at least 12.8 from the base of the neck (unless that would push it through the floor) */
+  (function(){var dx=a[0][0]-a[1][0],dy=a[0][1]-a[1][1],d=Math.hypot(dx,dy)||1,k=Math.max(d,12.8)/d,ny=a[1][1]+dy*k;
+    if(ny+6.3<=112.6) a[0]=[a[1][0]+dx*k,ny];})();
   var GY=112, H=a[0],Nk=a[1],Pv=a[2], gz=GZ[p.id]===undefined?0:GZ[p.id], side3=typeof gz==='number';
   var c=nrm(H[0]-Nk[0],H[1]-Nk[1]);
   var g=side3?[Math.cos(gz*Math.PI/180),Math.sin(gz*Math.PI/180)]:[0,0];
@@ -596,7 +599,7 @@ function fig(p,cls,o){
   function sw(v){return ' stroke-width="'+v+'"';}
   x0=(x0+x1)/2-W/2; y0=BASE-Hh;
   var vb=[r1(x0),r1(y0),r1(W),r1(Hh)].join(' ');
-  var neck=limb([[Nk,lerp(Nk,H,0.55),2.3,2.2]],'sk'), armN=armParts(shN,a[5],a[6]), armF=armParts(shF,a[3],a[4]);
+  var neck=limb([[Nk,lerp(Nk,H,0.62),2.6,2.3]],'sk'), armN=armParts(shN,a[5],a[6]), armF=armParts(shF,a[3],a[4]);
   return '<svg viewBox="'+vb+'" class="fig '+(cls||'')+'" role="img" aria-label="體位示意圖">'+
     '<line class="gnd" x1="'+r1(x0-60)+'" y1="113.8" x2="'+r1(x0+W+60)+'" y2="113.8"'+sw(1.6)+'/>'+(p.prop==='twist'?'':prop)+
     (sym?'':(p.farFront?'':p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(lvl?legSvg(farLeg,hpF,a[7],'sk','sh'):!F?legPair():legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
