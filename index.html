@@ -481,7 +481,7 @@ function fig(p,cls,o){
     if(!lu||!lv||p.bent)return;var cos=(u[0]*v[0]+u[1]*v[1])/(lu*lv);
     if(cos>0.62) a[A[1]]=[sh[0]+(hd[0]-sh[0])*0.5,sh[1]+(hd[1]-sh[1])*0.5];});
   var lvl=!F&&!sym; /* front-facing standing poses: level pelvis, hip line horizontal */
-  var hpF=F?Pv:lvl?[Pv[0]+(a[7][0]<a[9][0]?-4.4:4.4),Pv[1]+1.5]:tp(0.97,side(a[7])*4.4), hpN=F?Pv:lvl?[Pv[0]+(a[9][0]<=a[7][0]?-4.4:4.4),Pv[1]+1.5]:tp(0.97,side(a[9])*4.4);
+  var hpF=F||lvl?Pv:tp(0.97,side(a[7])*4.4), hpN=F||lvl?Pv:tp(0.97,side(a[9])*4.4);
   /* feet: direction comes from the FT table so every pose has a deliberate foot */
   function foot(ank,knee,spec){
     if(spec===null||spec===undefined) return null;
@@ -599,10 +599,10 @@ function fig(p,cls,o){
   var neck=limb([[Nk,lerp(Nk,H,0.55),2.3,2.2]],'sk'), armN=armParts(shN,a[5],a[6]), armF=armParts(shF,a[3],a[4]);
   return '<svg viewBox="'+vb+'" class="fig '+(cls||'')+'" role="img" aria-label="體位示意圖">'+
     '<line class="gnd" x1="'+r1(x0-60)+'" y1="113.8" x2="'+r1(x0+W+60)+'" y2="113.8"'+sw(1.6)+'/>'+(p.prop==='twist'?'':prop)+
-    (sym?'':(p.farFront?'':p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(!F?legPair():legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
+    (sym?'':(p.farFront?'':p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(lvl?legSvg(farLeg,hpF,a[7],'sk','sh'):!F?legPair():legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
     '<g'+sw(4.6)+'>'+braid+'</g>'+neck+
     '<g stroke-width="'+r1(OL*2*10)/10+'">'+torso+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
-    (sym?legPair():!F?pelvis():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||!F?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn'):'')+(p.farFront?limb(armF,'skn'):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,F?1:0))+
+    (sym?legPair():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||(!F&&!lvl)?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(lvl?pelvis():'')+(sym&&!p.thread?limb(armF,'skn'):'')+(p.farFront?limb(armF,'skn'):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,F?1:0))+
     (braidBack?'<g'+sw(4.6)+'>'+braidBack+'</g>':'')+'<circle class="'+headCls+'" cx="'+H[0]+'" cy="'+H[1]+'" r="6.3" stroke-width="'+r1(OL*2*10)/10+'"/>'+hair+
     '<g'+sw(1.6)+'>'+face+'</g>'+zoomSvg(p,x0,y0,W,Hh)+'</svg>';
 }
