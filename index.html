@@ -190,6 +190,7 @@ h2.sec{margin:26px 0 10px}
 .fig .sh{fill:var(--shorts)} .fig .shf{fill:var(--shorts-f)}
 .fig .torso{fill:var(--skin);stroke:var(--ol);paint-order:stroke;stroke-linejoin:round}
 .fig .shorts-t{fill:var(--shorts)}
+.fig .seam{fill:none;stroke:var(--ol);stroke-width:1.1;stroke-linecap:round}
 .fig .pelvis{fill:var(--shorts);stroke:var(--ol);paint-order:stroke;stroke-linejoin:round}
 .fig .top-t{fill:var(--top)}
 .fig .strap{fill:none;stroke:var(--top);stroke-width:1.1;stroke-linecap:round}
@@ -520,9 +521,10 @@ function fig(p,cls,o){
     return '<g class="ol">'+o+'</g><g class="sk">'+f1+'</g><g class="sh">'+f2+'</g>';
   }
   function pelvis(){ /* square, front-facing hips: one shorts shape over both thigh tops */
-    var q=function(x,y){return [Pv[0]+x,Pv[1]+y];};
-    var P=[q(-6.4,-4.6),q(6.4,-4.6),q(7.8,1),q(6.6,4.6),q(0,6.2),q(-6.6,4.6),q(-7.8,1)];
-    return '<path class="pelvis" d="'+smooth(P)+'" stroke-width="'+r1(OL*2*10)/10+'"/>';
+    var q=function(x,y){return xy([Pv[0]+x,Pv[1]+y]);};
+    /* two rounded glutes with a small centre seam */
+    var d='M'+q(-6.4,-4.6)+' L'+q(6.4,-4.6)+' Q'+q(8.6,-1)+' '+q(8.2,2.4)+' Q'+q(7.8,7.6)+' '+q(3.6,7.4)+' Q'+q(1,7.2)+' '+q(0,5)+' Q'+q(-1,7.2)+' '+q(-3.6,7.4)+' Q'+q(-7.8,7.6)+' '+q(-8.2,2.4)+' Q'+q(-8.6,-1)+' '+q(-6.4,-4.6)+'Z';
+    return '<path class="pelvis" d="'+d+'" stroke-width="'+r1(OL*2*10)/10+'"/><path class="seam" d="M'+q(0,1.2)+' L'+q(0,5)+'"/>';
   }
   var torso='<path class="torso" d="'+torsoShape(-0.08,1.1)+'"/><path class="top-t" d="'+torsoShape(0.16,0.64)+'"/>'+straps+'<path class="shorts-t" d="'+torsoShape(0.76,1.1)+'"/>';
   /* ---- braid & face (as before) ---- */
