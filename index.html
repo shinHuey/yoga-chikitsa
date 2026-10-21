@@ -472,7 +472,12 @@ function fig(p,cls,o){
   }
   /* shoulders / hips (spread sideways in front views) */
   function side(pt){var v=(pt[0]-Nk[0])*nx+(pt[1]-Nk[1])*ny;return v>=0?1:-1;}
-  var shF=tp(F?0.1:0.13,F?0:side(a[3])*6.9), shN=tp(F?0.1:0.13,F?0:side(a[5])*6.9);
+  var shF=tp(F?0.1:0.07,F?0:side(a[3])*6.6), shN=tp(F?0.1:0.07,F?0:side(a[5])*6.6);
+  /* nearly-straight arms are drawn perfectly straight: elbow on the line shoulder-hand */
+  [[shF,3,4],[shN,5,6]].forEach(function(A){var sh=A[0],el=a[A[1]],hd=a[A[2]];
+    var u=[el[0]-sh[0],el[1]-sh[1]],v=[hd[0]-el[0],hd[1]-el[1]],lu=Math.hypot(u[0],u[1]),lv=Math.hypot(v[0],v[1]);
+    if(!lu||!lv||p.bent)return;var cos=(u[0]*v[0]+u[1]*v[1])/(lu*lv);
+    if(cos>0.62) a[A[1]]=[sh[0]+(hd[0]-sh[0])*0.5,sh[1]+(hd[1]-sh[1])*0.5];});
   var hpF=F?Pv:tp(0.97,side(a[7])*4.4), hpN=F?Pv:tp(0.97,side(a[9])*4.4);
   /* feet: direction comes from the FT table so every pose has a deliberate foot */
   function foot(ank,knee,spec){
@@ -506,10 +511,10 @@ function fig(p,cls,o){
   }
   var straps='';[1,-1].forEach(function(sd){var S0=F||1,off=sd>0?interp(FR,0.18)*S0:-interp(BK,0.18)*S0;
     straps+='<path class="strap" d="M'+xy(tp(0.2,off*0.62))+' L'+xy(tp(-0.02,off*0.42))+'"/>';});
-  function legPair(){ /* front view: both legs as one layer, shorts level on top */
+  function legPair(merge){ /* front view: both legs as one layer, shorts level on top; merge = shorts blend into the hips */
     var o='',f1='',f2='';[[farLeg,hpF,a[7]],[nearLeg,hpN,a[9]]].forEach(function(L){
-      L[0].forEach(function(s){o+=seg(s[0],s[1],s[2]+OL,s[3]+OL);f1+=seg(s[0],s[1],s[2],s[3]);});
-      shortsParts(L[1],L[2]).forEach(function(s){o+=seg(s[0],s[1],s[2]+OL,s[3]+OL);f2+=seg(s[0],s[1],s[2],s[3]);});});
+      L[0].forEach(function(s,i){o+=seg(merge&&!i?lerp(s[0],s[1],0.5):s[0],s[1],s[2]+OL,s[3]+OL);f1+=seg(s[0],s[1],s[2],s[3]);});
+      shortsParts(L[1],L[2]).forEach(function(s){if(!merge)o+=seg(s[0],s[1],s[2]+OL,s[3]+OL);f2+=seg(s[0],s[1],s[2],s[3]);});});
     return '<g class="ol">'+o+'</g><g class="sk">'+f1+'</g><g class="sh">'+f2+'</g>';
   }
   var torso='<path class="torso" d="'+torsoShape(-0.08,1.1)+'"/><path class="top-t" d="'+torsoShape(0.16,0.64)+'"/>'+straps+'<path class="shorts-t" d="'+torsoShape(0.76,1.1)+'"/>';
@@ -588,7 +593,7 @@ function fig(p,cls,o){
     (sym?'':(p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(!F?'':legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
     '<g'+sw(4.6)+'>'+braid+'</g>'+neck+
     '<g stroke-width="'+r1(OL*2*10)/10+'">'+torso+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
-    (sym||!F?legPair():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||!F?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn',0,1):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,1))+
+    (sym?legPair():!F?legPair(1):'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||!F?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn',0,1):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,1))+
     (braidBack?'<g'+sw(4.6)+'>'+braidBack+'</g>':'')+'<circle class="'+headCls+'" cx="'+H[0]+'" cy="'+H[1]+'" r="6.3" stroke-width="'+r1(OL*2*10)/10+'"/>'+hair+
     '<g'+sw(1.6)+'>'+face+'</g>'+zoomSvg(p,x0,y0,W,Hh)+'</svg>';
 }
