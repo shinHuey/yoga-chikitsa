@@ -366,7 +366,7 @@ var P = [
  {id:'pindasana',bs:0,sa:'Pindasana',zh:'胚胎式',c:3,sim:'shoulder',pts:'60,106 60,99 60,76 44,98 57,88 76,98 63,88 46,94 64,82 74,94 56,82',parts:[['Pinda','胚胎、球']],note:'上蓮花的蓮花腿折向胸口，雙臂環抱。'},
  {id:'matsyasana',sa:'Matsyasana',zh:'魚式',c:3,sim:'fish',pts:'33,103 41,94 66,104 53,102 70,99 55,103 72,100 88,104 68,100 86,106 70,102',parts:[['Matsya','魚']],note:'蓮花坐仰躺，胸口拱起，頭頂著地，作為肩倒立系列的反向動作。'},
  {id:'uttanapada',sa:'Uttana Padasana',zh:'伸腿式',c:3,sim:'fish',pts:'33,103 41,94 66,104 62,86 84,79 64,87 86,80 87,96 108,86 88,97 109,87',parts:[['Uttana','強烈伸展'],['Pada','腳']],note:'魚式中將雙腿伸直抬起，雙手合掌朝同一方向。'},
- {id:'sirsasana',bs:0,sa:'Sirsasana',zh:'頭倒立',c:3,sim:'sirsa',pts:'60,105 60,95 60,66 48,110 58,104 72,110 62,104 59,43 59,20 61,43 61,20',parts:[['Sirsa','頭']],note:'前臂著地、雙手交扣抱頭，停留 15 到 25 個呼吸，接著半頭倒立。'},
+ {id:'sirsasana',legLine:1,bs:0,sa:'Sirsasana',zh:'頭倒立',c:3,sim:'sirsa',pts:'60,105 60,95 60,66 48,110 58,104 72,110 62,104 59,43 59,20 61,43 61,20',parts:[['Sirsa','頭']],note:'前臂著地、雙手交扣抱頭，停留 15 到 25 個呼吸，接著半頭倒立。'},
  {id:'yogamudra',bs:0,sa:'Yoga Mudrasana',zh:'瑜伽身印',c:3,sim:'lotus',pts:'60,95 60,86 60,104 42,84 56,94 78,84 64,94 36,104 68,99 84,104 52,99',parts:[['Yoga','結合'],['Mudra','印、封印']],note:'保持綁縛蓮花，吐氣向前彎，下巴靠近地面。'},
  {id:'padmasana',bs:0,sa:'Padmasana',zh:'蓮花坐',c:3,sim:'lotus',pts:'60,64 60,74 60,104 48,88 38,101 72,88 82,101 36,104 68,98 84,104 52,98',parts:[['Padma','蓮花']],note:'雙手放膝上結智慧手印，深長呼吸 25 次。'},
  {id:'utpluthih',thread:1,bs:0,sa:'Utpluthih',zh:'上提式',c:3,sim:'utpluthih',pts:'60,58 60,68 60,98 51,92 51,112 69,92 69,112 34,100 68,94 86,100 52,94',parts:[['Utpluti','向上提起、飄起']],note:'雙手撐地把蓮花坐整個提離地面，最後一個用力的體位。'},
@@ -606,7 +606,8 @@ function fig(p,cls,o){
     (sym?'':(p.farFront?'':p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(lvl?legSvg(farLeg,hpF,a[7],'sk','sh'):!F?legPair():legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
     '<g'+sw(4.6)+'>'+braid+'</g>'+neck+
     '<g stroke-width="'+r1(OL*2*10)/10+'">'+torso+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
-    (sym?legPair():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||(!F&&!lvl)?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn'):'')+(p.farFront?limb(armF,'skn'):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,F?1:0))+
+    (sym?legPair():'')+(p.legLine?(function(){var mk=lerp(a[7],a[9],0.5),mf=lerp(a[8],a[10],0.5),dv=nrm(mf[0]-mk[0],mf[1]-mk[1]),st=lerp(Pv,mk,0.2),en=[mf[0]+dv[0]*4,mf[1]+dv[1]*4];
+      return '<path class="seam" d="M'+xy(st)+' L'+xy(en)+'" stroke-width="'+r1(OL*0.9*10)/10+'"/>';})():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||(!F&&!lvl)?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn'):'')+(p.farFront?limb(armF,'skn'):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,F?1:0))+
     (braidBack?'<g'+sw(4.6)+'>'+braidBack+'</g>':'')+'<circle class="'+headCls+'" cx="'+H[0]+'" cy="'+H[1]+'" r="6.3" stroke-width="'+r1(OL*2*10)/10+'"/>'+hair+
     '<g'+sw(1.6)+'>'+face+'</g>'+zoomSvg(p,x0,y0,W,Hh)+'</svg>';
 }
