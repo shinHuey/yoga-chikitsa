@@ -424,6 +424,10 @@ var FT={vrksasana:[0,null],setuM:[180,180],uhpD:[0,[-90,0.8]],prasaritaB:[null,n
  dandasana:[-90,-90],paschimottanasana:[-90,-90],purvottanasana:[20,20],abpp:[-90,null],triang:[-90,[180,0.6]],janu:[-90,[-80,0.8]],mariA:[-90,0],mariB:[null,0],mariC:[-90,0],mariD:[null,0],navasana:['pt','pt'],bhujapidasana:['pt','pt'],kurmasana:[null,null],suptakurmasana:[null,null],garbha:[null,null],kukkutasana:[null,null],baddhakona:[null,null],upavistha:[[-90,0.7],[-90,0.7]],suptakona:[null,null],suptapada:[-90,[180,0.8]],ubhaya:['pt','pt'],umpasch:['pt','pt'],setu:[0,0],
  wheel:[0,0],sarvangasana:['pt','pt'],halasana:[180,180],karnapidasana:[[180,1],[180,1]],urdhvapadma:[null,null],pindasana:[null,null],matsyasana:[null,null],uttanapada:['pt','pt'],sirsasana:['pt','pt'],yogamudra:[null,null],padmasana:[null,null],utpluthih:[null,null],savasana:[-70,-70]};
 /* front-facing poses drawn left-right symmetric: far side mirrors the near side, same tones */
+var SPINE={urdhvahasta:1.5,viraA:2,updog:5,downdog:-0.5,ardhauttanasana:1,uttanasana:-3,padangusthasana:-3,padahastasana:-3,parsvottanasana:-2.5,abpu:-2.5,uhpC:-2,
+ purvottanasana:1.5,paschimottanasana:-2,paschB:-2,paschC:-2,abpp:-2,triang:-2,janu:-2,januB:-2,januC:-2,mariA:-2.5,mariB:-2.5,
+ bhujapidasana:-4,suptakurmasana:-5,garbha:-5,ubhaya:-1,umpasch:-1.5,setu:4,setuM:3.5,wheel:7,halasana:-3,karnapidasana:-4,
+ matsyasana:5,uttanapada:3.5};
 var NONECK={kurmasana:1,baddhakona:1,upavistha:1,yogamudra:1};
 var SYM={prasaritaB:1,prasaritaC:1,prasaritaD:1,baddhakonaB:1,upavisthaB:1,prasarita:1,kurmasana:1,urdhvapadma:1,pindasana:1,baddhakona:1,upavistha:1,suptakona:1,kukkutasana:1,sirsasana:1,padmasana:1,yogamudra:1,utpluthih:1};
 function fig(p,cls,o){
@@ -460,7 +464,11 @@ function fig(p,cls,o){
   if(F){FR=[[-0.08,3.4],[0.05,5],[0.28,5.9],[0.5,4.9],[0.68,5.4],[0.9,5.3],[1.1,3.6]];
         BK=[[-0.08,3.6],[0.05,5.4],[0.3,5.0],[0.6,4.1],[0.88,5.9],[1.1,4.2]];}
   else {FR=BK=[[-0.08,4.5],[0.04,7.6],[0.3,6.6],[0.58,5.4],[0.9,6.9],[1.1,5.2]];}
-  function tp(t,o){return [Nk[0]+ux*L*t+nx*o,Nk[1]+uy*L*t+ny*o];}
+  /* spine curve: + = extension (arch, belly side bulges), - = flexion (rounded back); peaks mid-back */
+  var BW=(F?(SPINE[p.id]||0)*F:0);
+  /* natural S: thoracic kyphosis (upper back bulges back), lumbar lordosis (low back curves in) */
+  var NS=F?1.1*F:0;
+  function tp(t,o){var b=BW*4*t*(1-t)-NS*Math.sin(2*Math.PI*Math.min(Math.max(t,0),1));return [Nk[0]+ux*L*t+nx*(o+b),Nk[1]+uy*L*t+ny*(o+b)];}
   function torsoShape(t0,t1){
     var P=[],N=9,i,t,S=F||1;
     for(i=0;i<=N;i++){t=t0+(t1-t0)*i/N;P.push(tp(t,S*interp(FR,t)));}
