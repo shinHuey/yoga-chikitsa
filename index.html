@@ -525,7 +525,7 @@ function fig(p,cls,o){
     if(fold){ /* folded leg: thigh first, then the shin lying over it with its own edge */
       return legSvg(parts.slice(0,1),hip,knee,sk,sh,gap)+limb(parts.slice(1),sk,0,1);
     }
-    var sp=shortsParts(hip,knee),g='',o='',f1='',f2='', uni=gap&&F&&!fold; /* side view near leg: hip merges with the torso */
+    var sp=shortsParts(hip,knee),g='',o='',f1='',f2='', uni=false; /* side view near leg: hip merges with the torso */
     /* gap ring skips the thigh root so the leg still joins the hips */
     parts.forEach(function(s,i){if(gap)g+=seg(i?s[0]:lerp(s[0],s[1],0.45),s[1],s[2]+OL+GAP,s[3]+OL+GAP);
       o+=seg(uni&&!i?lerp(s[0],s[1],0.45):s[0],s[1],s[2]+OL,s[3]+OL);f1+=seg(s[0],s[1],uni&&!i?Math.min(s[2],4.1):s[2],s[3]);});
@@ -547,7 +547,7 @@ function fig(p,cls,o){
     return '<path class="pelvis" d="'+d+'" stroke-width="'+r1(OL*2*10)/10+'"/><path class="seam" d="M'+q(0,1.2)+' L'+q(0,5)+'"/>';
   }
   var TB=p.hipSplit?0.97:1.1; /* front view standing on split hips: no bulge between the legs */
-  var UNI=F&&!sym&&!p.fold&&!p.hipSplit; /* side view: torso and near hip drawn as one shape */
+  var UNI=false; /* side view: torso and near hip drawn as one shape */
   var tcid='tc'+(zid++); /* clothes are bands clipped to the body contour: no pinched corners */
   function band(t0,t1){var P=[],k,n=8;for(k=0;k<=n;k++)P.push(tp(t0+(t1-t0)*k/n,-14));for(k=n;k>=0;k--)P.push(tp(t0+(t1-t0)*k/n,14));
     return 'M'+P.map(xy).join(' L')+'Z';}
