@@ -190,6 +190,8 @@ h2.sec{margin:26px 0 10px}
 .fig .sh{fill:var(--shorts)} .fig .shf{fill:var(--shorts-f)}
 .fig .torso{fill:var(--skin);stroke:var(--ol);paint-order:stroke;stroke-linejoin:round}
 .fig .shorts-t{fill:var(--shorts)}
+.fig .tol{fill:none;stroke:var(--ol);stroke-linejoin:round}
+.fig .torso.nos{stroke:none}
 .fig .seam{fill:none;stroke:var(--ol);stroke-width:1.1;stroke-linecap:round}
 .fig .pelvis{fill:var(--shorts);stroke:var(--ol);paint-order:stroke;stroke-linejoin:round}
 .fig .top-t{fill:var(--top)}
@@ -523,11 +525,11 @@ function fig(p,cls,o){
     if(fold){ /* folded leg: thigh first, then the shin lying over it with its own edge */
       return legSvg(parts.slice(0,1),hip,knee,sk,sh,gap)+limb(parts.slice(1),sk,0,1);
     }
-    var sp=shortsParts(hip,knee),g='',o='',f1='',f2='', tuck=gap&&F; /* side view near leg: root tucked into the hips */
+    var sp=shortsParts(hip,knee),g='',o='',f1='',f2='', uni=gap&&F&&!fold; /* side view near leg: hip merges with the torso */
     /* gap ring skips the thigh root so the leg still joins the hips */
     parts.forEach(function(s,i){if(gap)g+=seg(i?s[0]:lerp(s[0],s[1],0.45),s[1],s[2]+OL+GAP,s[3]+OL+GAP);
-      o+=seg(tuck&&!i?lerp(s[0],s[1],0.35):s[0],s[1],s[2]+OL,s[3]+OL);f1+=seg(s[0],s[1],tuck&&!i?Math.min(s[2],3.6):s[2],s[3]);});
-    sp.forEach(function(s){o+=seg(tuck?lerp(s[0],s[1],0.55):s[0],s[1],s[2]+OL,s[3]+OL);f2+=seg(s[0],s[1],tuck?3.8:s[2],s[3]);});
+      o+=seg(uni&&!i?lerp(s[0],s[1],0.45):s[0],s[1],s[2]+OL,s[3]+OL);f1+=seg(s[0],s[1],uni&&!i?Math.min(s[2],4.1):s[2],s[3]);});
+    sp.forEach(function(s){if(!uni)o+=seg(s[0],s[1],s[2]+OL,s[3]+OL);f2+=seg(s[0],s[1],uni?Math.min(s[2],4.4):s[2],s[3]);});
     return (gap?'<g class="gap">'+g+'</g>':'')+'<g class="ol">'+o+'</g><g class="'+sk+'">'+f1+'</g><g class="'+sh+'">'+f2+'</g>';
   }
   var straps='';[1,-1].forEach(function(sd){var S0=F||1,off=sd>0?interp(FR,0.18)*S0:-interp(BK,0.18)*S0;
@@ -545,7 +547,12 @@ function fig(p,cls,o){
     return '<path class="pelvis" d="'+d+'" stroke-width="'+r1(OL*2*10)/10+'"/><path class="seam" d="M'+q(0,1.2)+' L'+q(0,5)+'"/>';
   }
   var TB=p.hipSplit?0.97:1.1; /* front view standing on split hips: no bulge between the legs */
-  var torso='<path class="torso" d="'+torsoShape(-0.08,TB)+'"/><path class="top-t" d="'+torsoShape(0.16,0.64)+'"/>'+straps+'<path class="shorts-t" d="'+torsoShape(0.76,TB)+'"/>';
+  var UNI=F&&!sym&&!p.fold&&!p.hipSplit; /* side view: torso and near hip drawn as one shape */
+  var tcid='tc'+(zid++); /* clothes are bands clipped to the body contour: no pinched corners */
+  function band(t0,t1){var P=[],k,n=8;for(k=0;k<=n;k++)P.push(tp(t0+(t1-t0)*k/n,-14));for(k=n;k>=0;k--)P.push(tp(t0+(t1-t0)*k/n,14));
+    return 'M'+P.map(xy).join(' L')+'Z';}
+  var torso='<defs><clipPath id="'+tcid+'"><path d="'+torsoShape(-0.08,TB)+'"/></clipPath></defs><path class="torso" d="'+torsoShape(-0.08,TB)+'"/>'+
+    '<g clip-path="url(#'+tcid+')"><path class="top-t" d="'+band(0.16,0.64)+'"/><path class="shorts-t" d="'+band(0.76,TB+0.4)+'"/></g>'+straps;
   /* ---- braid & face (as before) ---- */
   var braid='', braidPts=[], hair='', face='', headCls='head', braidBack='';
   if(side3){
@@ -622,7 +629,9 @@ function fig(p,cls,o){
     '<line class="gnd" x1="'+r1(x0-60)+'" y1="113.8" x2="'+r1(x0+W+60)+'" y2="113.8"'+sw(1.6)+'/>'+(p.prop==='twist'?'':prop)+
     (sym?'':(p.farFront?'':p.farTop?limb(armF.slice(1),'skf'):limb(armF,'skf'))+(lvl?legSvg(farLeg,hpF,a[7],'sk','sh')+(p.hipSplit?legSvg(nearLeg,hpN,a[9],'sk','sh',true):''):!F?legPair():legSvg(farLeg,hpF,a[7],'skf','shf')))+(p.nb?limb(armN,'skn'):'')+(p.thread?limb(armF,'skn')+limb(armN,'skn'):'')+
     '<g'+sw(4.6)+'>'+braid+'</g>'+neck+
-    '<g stroke-width="'+r1(OL*2*10)/10+'">'+torso+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
+    (UNI?'<g class="ol">'+(function(){var o='';nearLeg.forEach(function(q,i){o+=seg(q[0],q[1],(i?q[2]:Math.min(q[2],4.1))+OL,q[3]+OL);});shortsParts(hpN,a[9]).forEach(function(q){o+=seg(q[0],q[1],Math.min(q[2],4.4)+OL,q[3]+OL);});return o;})()+'</g>'+
+      '<path class="tol" d="'+torsoShape(-0.08,TB)+'" stroke-width="'+r1(OL*2*10)/10+'"/>':'')+
+    '<g stroke-width="'+r1(OL*2*10)/10+'">'+(UNI?torso.replace('class="torso"','class="torso nos"'):torso)+'</g>'+(p.prop==='twist'?'<g'+sw(2.2)+'>'+prop+'</g>':'')+
     (sym?legPair():'')+(p.hipSplit?(function(){var f2='';[[hpF,a[7]],[hpN,a[9]]].forEach(function(L){shortsParts(L[0],L[1]).forEach(function(q){f2+=seg(q[0],q[1],q[2]-0.2,q[3]);});});return '<g class="sh">'+f2+'</g>';})():'')+(p.legLine?(function(){var mk=lerp(a[7],a[9],0.5),mf=lerp(a[8],a[10],0.5),dv=nrm(mf[0]-mk[0],mf[1]-mk[1]),st=lerp(Pv,mk,0.2),en=[mf[0]+dv[0]*4,mf[1]+dv[1]*4];
       return '<path class="seam" d="M'+xy(st)+' L'+xy(en)+'" stroke-width="'+r1(OL*0.9*10)/10+'"/>';})():'')+(p.wrap?limb([armN[0]],'skn',0,1):'')+(sym||(!F&&!lvl)||p.hipSplit?'':legSvg(nearLeg,hpN,a[9],'sk','sh',true,p.fold))+(sym&&!p.thread?limb(armF,'skn'):'')+(p.farFront?limb(armF,'skn'):'')+(p.farTop?limb([armF[0]],'skf',0,1):'')+(p.nb||p.thread?'':limb(p.wrap?armN.slice(1):armN,'skn',0,F?1:0))+
     (braidBack?'<g'+sw(4.6)+'>'+braidBack+'</g>':'')+'<circle class="'+headCls+'" cx="'+H[0]+'" cy="'+H[1]+'" r="6.3" stroke-width="'+r1(OL*2*10)/10+'"/>'+hair+
